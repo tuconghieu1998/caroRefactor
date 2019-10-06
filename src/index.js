@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import * as Board from './board';
+import Board from './board';
 
 const MAX_ROW = 20;
 const MAX_COL = 20;
@@ -261,18 +261,18 @@ class Game extends React.Component {
   }
 
   handleClick(i) {
-    const { modalOpen } = this.state;
-    const history = modalOpen.history.slice(0, stepNumber + 1);
-    const current = history[history.length - 1];
+    const { history } = this.state;
+    const history1 = history.slice(0, stepNumber + 1);
+    const current = history1[history1.length - 1];
     const squares = current.squares.slice();
     if (calculateWinner(squares, current.currentPos) || squares[i]) {
       return;
     }
     squares[i] = xIsNext ? 'X' : 'O';
-    stepNumber = history.length;
+    stepNumber = history1.length;
     xIsNext = !xIsNext;
     this.setState({
-      history: history.concat([
+      history: history1.concat([
         {
           squares,
           currentPos: i

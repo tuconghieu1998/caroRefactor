@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './index.css';
 
 function Square(props) {
@@ -20,4 +19,4 @@ function Square(props) {
 }
 // ========================================
 
-ReactDOM.render(<Square />, document.getElementById('root'));
+export default Square;

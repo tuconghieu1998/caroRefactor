@@ -1,11 +1,10 @@
 import React from 'react';
-import './index.css';
+import PropTypes from 'prop-types';
 
-function Square(props) {
+const Square = ({ value, onClick, winningSquare }) => {
   const winningSquareStyle = {
     backgroundColor: '#ccc'
   };
-  const { value, onClick, winningSquare } = props;
   return (
     <button
       type="button"
@@ -16,7 +15,12 @@ function Square(props) {
       {value}
     </button>
   );
-}
-// ========================================
+};
 
+// ========================================
+Square.propTypes = {
+  value: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  winningSquare: PropTypes.bool.isRequired
+};
 export default Square;

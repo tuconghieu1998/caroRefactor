@@ -1,5 +1,5 @@
 import React from 'react';
-import './index.css';
+import PropTypes from 'prop-types';
 import Square from './square';
 
 const MAX_ROW = 20;
@@ -60,5 +60,12 @@ function Board({ winner, squares, onClick }) {
     </div>
   );
 }
-
+Board.propTypes = {
+  winner: PropTypes.shape({
+    winner: PropTypes.bool.isRequired,
+    winningSquares: PropTypes.arrayOf(Int32Array).isRequired
+  }).isRequired,
+  squares: PropTypes.arrayOf(String).isRequired,
+  onClick: PropTypes.func.isRequired
+};
 export default Board;

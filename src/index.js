@@ -6,7 +6,7 @@ import Board from './board';
 const MAX_ROW = 20;
 const MAX_COL = 20;
 const numToWin = 5;
-let stepNumber = 0;
+// let stepNumber = 0;
 let xIsNext = true;
 let arrange = 'ASC'; // sắp xếp lịch sử trong dropdown tăng dần
 
@@ -255,13 +255,14 @@ class Game extends React.Component {
           squares: Array(MAX_COL * MAX_ROW).fill(null),
           currentPos: -1
         }
-      ]
+      ],
+      stepNumber: 0
     };
     this.changeSort = this.changeSort.bind(this);
   }
 
   handleClick(i) {
-    const { history } = this.state;
+    const { history, stepNumber } = this.state;
     const history1 = history.slice(0, stepNumber + 1);
     const current = history1[history1.length - 1];
     const squares = current.squares.slice();
@@ -269,7 +270,6 @@ class Game extends React.Component {
       return;
     }
     squares[i] = xIsNext ? 'X' : 'O';
-    stepNumber = history1.length;
     xIsNext = !xIsNext;
     this.setState({
       history: history1.concat([
@@ -277,14 +277,14 @@ class Game extends React.Component {
           squares,
           currentPos: i
         }
-      ])
+      ]),
+      stepNumber: history1.length
     });
   }
 
   jumpTo(step) {
     if (step === 0) {
       // Khi nhấn nút chơi lại thì remove toàn bộ history
-      stepNumber = 0;
       xIsNext = true;
       this.setState({
         history: [
@@ -292,11 +292,13 @@ class Game extends React.Component {
             squares: Array(MAX_COL * MAX_ROW).fill(null),
             currentPos: -1
           }
-        ]
+        ],
+        stepNumber: 0
       });
     }
-
-    stepNumber = step;
+    this.setState({
+      stepNumber: step
+    });
     xIsNext = step % 2 === 0;
   }
 
@@ -306,7 +308,7 @@ class Game extends React.Component {
   }
 
   render() {
-    const { history } = this.state;
+    const { history, stepNumber } = this.state;
     const current = history[stepNumber];
     const winner = calculateWinner(current.squares, current.currentPos);
 
